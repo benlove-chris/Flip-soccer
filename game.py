@@ -52,9 +52,9 @@ class GameView(arcade.View):
 
         self.apito_gol = arcade.load_sound("music/apito.mp3")
         self.som_chute = arcade.load_sound("music/chute.ogg")
-        self.som_fundo = arcade.load_sound("music/fundo.mp3")
-        arcade.play_sound(self.som_fundo)
-        
+        self.som_fundo = arcade.load_sound("music/fundo.mp3")        
+        self.media_player_fundo = arcade.play_sound(self.som_fundo, looping=True)
+
         
         
         
@@ -316,19 +316,24 @@ class GameView(arcade.View):
         
         #Game over - vencedor
         
-        if self.score1 == 5:
-            arcade.stop_sound(self.som_fundo)
+        if self.score1 == 1:
+            if self.media_player_fundo:
+                arcade.stop_sound(self.media_player_fundo)
+                self.media_player_fundo = None
+
             game_over_view = Vitoria1()
-            
             self.window.set_mouse_visible(True)
             self.window.show_view(game_over_view)
-            
-        elif self.score2 == 5:
-            arcade.stop_sound(self.som_fundo)
+
+        elif self.score2 == 1:
+            if self.media_player_fundo:
+                arcade.stop_sound(self.media_player_fundo)
+                self.media_player_fundo = None
+
             game_over_view = Vitoria2()
-            
             self.window.set_mouse_visible(True)
-            self.window.show_view(game_over_view)
+            self.window.show_view(game_over_view) # Reseta o player
+
             
         
         

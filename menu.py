@@ -1,4 +1,3 @@
-
 import arcade
 import random
 import os
@@ -36,8 +35,7 @@ class TextButton:
         self.button_height = button_height
 
     def draw(self):
-        
-        """ Desenha o botão"""
+        """ Desenha o botão """
         arcade.draw_rectangle_filled(self.center_x, self.center_y, self.width,
                                      self.height, self.face_color)
 
@@ -90,7 +88,7 @@ class TextButton:
 
 
 def check_mouse_press_for_buttons(x, y, button_list):
-    """ verifica se precisamos registrar algum clique de botão."""
+    """ Verifica se precisamos registrar algum clique de botão. """
     for button in button_list:
         if x > button.center_x + button.width / 2:
             continue
@@ -104,8 +102,7 @@ def check_mouse_press_for_buttons(x, y, button_list):
 
 
 def check_mouse_release_for_buttons(_x, _y, button_list):
-    """verifica se precisamos processar
-        quaisquer eventos de lançamento. """
+    """ Verifica se precisamos processar quaisquer eventos de lançamento. """
     for button in button_list:
         if button.pressed:
             button.on_release()
@@ -137,57 +134,46 @@ class MenuGame(arcade.View):
     """
 
     def __init__(self):
-        
         super().__init__()
         file_path = os.path.dirname(os.path.abspath(__file__))
         os.chdir(file_path)
-       
-
 
         self.parar = False
-        
         self.lista_de_botoes = None
         self.som_menu = arcade.load_sound("music/menu_som.mp3")
-        arcade.play_sound(self.som_menu)
-        
+        self.media_player_menu = None  # Para armazenar o player do som
 
     def setup(self):
         """
         Configurações, criar botões
         """
-    
         self.lista_de_botoes = []
 
-        botao_jogar = BotaoParaIniciar(SCREEN_WIDTH/2, SCREEN_HEIGHT/2+10, self.iniciar_jogo)  
-        
+        botao_jogar = BotaoParaIniciar(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 10, self.iniciar_jogo)
         self.lista_de_botoes.append(botao_jogar)
 
-        botao_sair = BotaoParaSair(SCREEN_WIDTH/2, SCREEN_HEIGHT/2-130, self.parar_jogo)
+        botao_sair = BotaoParaSair(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 130, self.parar_jogo)
         self.lista_de_botoes.append(botao_sair)
+
+        # Toca o som do menu e salva o media player
+        self.media_player_menu = arcade.play_sound(self.som_menu)
 
     def on_draw(self):
         """
         Desenha a tela
         """
-
         arcade.start_render()
-        
+        arcade.draw_lrwh_rectangle_textured(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, arcade.load_texture("img/plano.jpg"))
 
-     
-        arcade.draw_lrwh_rectangle_textured(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT,arcade.load_texture("img/plano.jpg"))
-
-        # Dessenha os botões
+        # Desenha os botões
         for button in self.lista_de_botoes:
             button.draw()
-
-    
 
     def on_mouse_press(self, x, y, button, key_modifiers):
         """
         Chamado quando o usuário pressiona um botão do mouse.
         """
         check_mouse_press_for_buttons(x, y, self.lista_de_botoes)
-        
 
     def on_mouse_release(self, x, y, button, key_modifiers):
         """
@@ -196,20 +182,18 @@ class MenuGame(arcade.View):
         check_mouse_release_for_buttons(x, y, self.lista_de_botoes)
 
     def parar_jogo(self):
-        
         self.parar = True
 
     def iniciar_jogo(self):
-        arcade.stop_sound(self.som_menu)
+        if self.media_player_menu:
+            arcade.stop_sound(self.media_player_menu)
         jogo = GameView()
         self.window.show_view(jogo)
         jogo.setup()
-        
 
 
 def main():
     """ Main method """
-    
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
     menu = MenuGame()
     window.show_view(menu)
