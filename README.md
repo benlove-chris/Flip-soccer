@@ -15,7 +15,7 @@
 
  
 
-<h4>Criadores: Benlove Anelus, Gabriel João Rosa, Nickolas Guinter e Gregóry Antunes </h4>
+<h4>Criadores: Benlove Anelus, Gabriel João Rosa, Nickolas Guenther e Gregóry Antunes </h4>
 
 
 <h3>Requisitos: </h3>
