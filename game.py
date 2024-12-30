@@ -316,7 +316,7 @@ class GameView(arcade.View):
         
         #Game over - vencedor
         
-        if self.score1 == 1:
+        if self.score1 == 5: #placar vencedor
             if self.media_player_fundo:
                 arcade.stop_sound(self.media_player_fundo)
                 self.media_player_fundo = None
@@ -325,7 +325,7 @@ class GameView(arcade.View):
             self.window.set_mouse_visible(True)
             self.window.show_view(game_over_view)
 
-        elif self.score2 == 1:
+        elif self.score2 == 5: #placar vencedor
             if self.media_player_fundo:
                 arcade.stop_sound(self.media_player_fundo)
                 self.media_player_fundo = None
