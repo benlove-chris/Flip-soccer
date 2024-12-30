@@ -20,7 +20,7 @@
 
 <h3>Requisitos: </h3>
 <ul>
-	<li>Python versão 3.8 ou superior (<a href="https://www.python.org/downloads/">Link para download</a>)</li>
+	<li>Python versão 3.8(<a href="https://www.python.org/downloads/">Link para download</a>)</li>
   <li>Arcade na versão 2.1.7 (<a href="http://arcade.academy/">Documentação da biblioteca</a>)</li>
 
 </ul>
